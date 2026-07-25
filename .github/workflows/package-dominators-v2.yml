@@ -1,0 +1,21 @@
+name: Package DOMINATORS v2
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate prototype
+        run: |
+          test -f DOMINATORS-v2/index.html
+          test -f DOMINATORS-v2/PLAY_DOMINATORS_V2.bat
+          grep -q "DOMINATORS V2" DOMINATORS-v2/index.html
+      - name: Package
+        run: zip -r DOMINATORS-browser-prototype-v2.zip DOMINATORS-v2
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DOMINATORS-browser-prototype-v2
+          path: DOMINATORS-browser-prototype-v2.zip
+          if-no-files-found: error
